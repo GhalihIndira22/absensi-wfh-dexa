@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.use('/user', profileRoutes);
 
-const PORT = 3002;
+const PORT = process.env.USER_PORT || 3002;
 app.listen(PORT, () => {
     console.log(`User Service running on port ${PORT}`);
 });
