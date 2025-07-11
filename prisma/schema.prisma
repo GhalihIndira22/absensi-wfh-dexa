@@ -20,6 +20,7 @@ model User {
   updatedAt    DateTime @updatedAt
 
   Attendance Attendance[]
+  logs       ProfileChangeLog[] @relation("UserLogs")
 }
 
 model Attendance {
@@ -29,4 +30,14 @@ model Attendance {
   type      String // "masuk" or "pulang"
   timestamp DateTime @default(now())
   createdAt DateTime @default(now())
+}
+
+model ProfileChangeLog {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  changeType String
+  oldValue   String?
+  newValue   String?
+  changedAt  DateTime
+  user       User     @relation("UserLogs", fields: [employeeId], references: [id])
 }

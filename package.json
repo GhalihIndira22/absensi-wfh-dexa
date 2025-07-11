@@ -9,6 +9,7 @@
     "dev:auth": "ts-node-dev --respawn --transpile-only services/auth/index.ts",
     "dev:user": "ts-node-dev --respawn --transpile-only services/user/index.ts",
     "dev:attendance": "ts-node-dev --respawn --transpile-only services/attendance/index.ts",
+    "dev:worker": "ts-node-dev --respawn --transpile-only services/worker/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "prisma db seed"
   },
@@ -22,7 +23,8 @@
     "date-fns": "^4.1.0",
     "dotenv": "^17.1.0",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "kafkajs": "^2.2.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
