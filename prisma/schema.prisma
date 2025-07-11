@@ -8,19 +8,19 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
+  id           Int                @id @default(autoincrement())
+  email        String             @unique
   name         String
   position     String
   phoneNumber  String?
   photoUrl     String?
   passwordHash String
-  role         String   @default("employee")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  Attendance Attendance[]
-  logs       ProfileChangeLog[] @relation("UserLogs")
+  role         String             @default("employee")
+  isActive     Boolean            @default(true)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  logs         ProfileChangeLog[] @relation("UserLogs")
+  Attendance   Attendance[]
 }
 
 model Attendance {

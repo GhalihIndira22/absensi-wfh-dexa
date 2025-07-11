@@ -9,6 +9,7 @@
     "dev:auth": "ts-node-dev --respawn --transpile-only services/auth/index.ts",
     "dev:user": "ts-node-dev --respawn --transpile-only services/user/index.ts",
     "dev:attendance": "ts-node-dev --respawn --transpile-only services/attendance/index.ts",
+    "dev:admin": "ts-node-dev --respawn --transpile-only services/admin/index.ts",
     "dev:worker": "ts-node-dev --respawn --transpile-only services/worker/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "prisma db seed"

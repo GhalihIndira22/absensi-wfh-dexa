@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createAttendance } from '../services/attendance.service';
+import {createAttendance, getAttendanceRecords} from '../services/attendance.service';
 import { getAttendanceSummary } from '../services/attendance.service';
 
 
@@ -19,7 +19,6 @@ export const absen = async (req: Request, res: Response) => {
     }
 };
 
-
 export const getSummary = async (req: Request, res: Response) => {
     try {
         const user = req.user!;
@@ -30,5 +29,10 @@ export const getSummary = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
+};
+
+export const getAllAttendance = async (req: Request, res: Response) => {
+    const attendances = await getAttendanceRecords(req.query);
+    res.json(attendances);
 };
 
