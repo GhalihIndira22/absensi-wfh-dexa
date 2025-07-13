@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    const userId = 3;
+    const userId = 1;
     const baseDate = new Date('2025-07-01');
 
     for (let i = 0; i < 9; i++) {

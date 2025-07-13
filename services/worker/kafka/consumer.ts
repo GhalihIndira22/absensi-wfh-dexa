@@ -1,5 +1,6 @@
 import { Kafka } from 'kafkajs';
 import { saveLog } from '../services/log.service';
+import {sendAdminNotification} from "../sendAdminNotification";
 
 const kafka = new Kafka({
     clientId: 'worker-service',
@@ -18,6 +19,7 @@ export const startConsumer = async () => {
 
             const payload = JSON.parse(message.value.toString());
             await saveLog(payload);
+            await sendAdminNotification(payload);
         }
     });
 };

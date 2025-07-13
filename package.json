@@ -12,7 +12,7 @@
     "dev:admin": "ts-node-dev --respawn --transpile-only services/admin/index.ts",
     "dev:worker": "ts-node-dev --respawn --transpile-only services/worker/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "prisma db seed"
+    "seed": "ts-node prisma/seed.ts && ts-node prisma/seed-admin.ts && ts-node prisma/seed-attendance.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,16 +21,21 @@
   "dependencies": {
     "@prisma/client": "^6.11.1",
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "dotenv": "^17.1.0",
     "express": "^5.1.0",
+    "firebase-admin": "^13.4.0",
     "jsonwebtoken": "^9.0.2",
-    "kafkajs": "^2.2.4"
+    "kafkajs": "^2.2.4",
+    "multer": "^2.0.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
     "@types/node": "^24.0.12",
     "prisma": "^6.11.1",
     "ts-node": "^10.9.2",

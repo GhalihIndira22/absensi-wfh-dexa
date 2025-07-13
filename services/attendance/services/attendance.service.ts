@@ -41,22 +41,38 @@ export const createAttendance = async (userId: number, type: string) => {
     });
 };
 
-export const getAttendanceSummary = async (userId: number, start?: string, end?: string) => {
+export const getAttendanceSummary = async (userId: number, start?: string, end?: string, page: number = 1, pageSize: number = 20) => {
     const startDate = start ? parseISO(start) : startOfMonth(new Date());
     const endDate = end ? parseISO(end) : endOfToday();
+    const skip = (page - 1) * pageSize;
 
-    return prisma.attendance.findMany({
-        where: {
-            userId,
-            timestamp: {
-                gte: startDate,
-                lte: endDate
-            }
-        },
-        orderBy: {
-            timestamp: 'asc'
+    const where = {
+        userId,
+        timestamp: {
+            gte: startDate,
+            lte: endDate
         }
-    });
+    };
+
+    const [data, total] = await Promise.all([
+        prisma.attendance.findMany({
+            where,
+            orderBy: { timestamp: 'asc' },
+            skip,
+            take: pageSize
+        }),
+        prisma.attendance.count({ where })
+    ]);
+
+    return {
+        data,
+        meta: {
+            total,
+            page,
+            pageSize,
+            totalPages: Math.ceil(total / pageSize)
+        }
+    };
 };
 
 export const getAttendanceRecords = async (query: {
@@ -64,8 +80,14 @@ export const getAttendanceRecords = async (query: {
     endDate?: string;
     employeeId?: string;
     email?: string;
+    page?: string;
+    limit?: string;
 }) => {
-    const { startDate, endDate, employeeId, email } = query;
+    const { startDate, endDate, employeeId, email, page = '1', limit = '20' } = query;
+
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skip = (pageNum - 1) * limitNum;
 
     const where: any = {};
 
@@ -88,16 +110,32 @@ export const getAttendanceRecords = async (query: {
         };
     }
 
-    return prisma.attendance.findMany({
-        where,
-        include: {
-            employee: {
-                select: {
-                    name: true,
-                    email: true
+    const [data, total] = await Promise.all([
+        prisma.attendance.findMany({
+            where,
+            skip,
+            take: limitNum,
+            include: {
+                employee: {
+                    select: {
+                        name: true,
+                        email: true
+                    }
                 }
-            }
-        },
-        orderBy: { timestamp: 'desc' }
-    });
+            },
+            orderBy: { timestamp: 'desc' }
+        }),
+        prisma.attendance.count({ where })
+    ]);
+
+    return {
+        data,
+        meta: {
+            total,
+            page: pageNum,
+            limit: limitNum,
+            totalPages: Math.ceil(total / limitNum)
+        }
+    };
 };
+

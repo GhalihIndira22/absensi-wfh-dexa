@@ -29,40 +29,55 @@ export const createEmployee = async (req: Request, res: Response) => {
 };
 
 export const getAllEmployees = async (req: Request, res: Response) => {
-    const { email, includeInactive } = req.query;
+    const { email, includeInactive, page = '1', pageSize = '10' } = req.query;
 
     const includeInactiveBool = includeInactive === 'true';
+    const pageNumber = Math.max(Number(page), 1);
+    const size = Math.max(Number(pageSize), 1);
+    const skip = (pageNumber - 1) * size;
 
-    const employees = await prisma.user.findMany({
-        where: {
-            role: 'employee',
-            ...(includeInactiveBool ? {} : { isActive: true }), // ✅ filter aktif jika tidak diminta semua
-            ...(email && {
-                email: {
-                    contains: email as string,
-                    mode: 'insensitive'
-                }
-            })
-        },
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            position: true,
-            phoneNumber: true,
-            photoUrl: true,
-            isActive: true, // ✅ tampilkan statusnya
-            createdAt: true,
-            updatedAt: true
-        },
-        orderBy: {
-            createdAt: 'desc'
-        }
+    const where: any = {
+        role: 'employee',
+        ...(includeInactiveBool ? {} : { isActive: true }),
+        ...(email && {
+            email: {
+                contains: email as string,
+                mode: 'insensitive'
+            }
+        })
+    };
+
+    const [employees, total] = await Promise.all([
+        prisma.user.findMany({
+            where,
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                position: true,
+                phoneNumber: true,
+                photoUrl: true,
+                isActive: true,
+                createdAt: true,
+                updatedAt: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            skip,
+            take: size
+        }),
+        prisma.user.count({ where })
+    ]);
+
+    res.json({
+        data: employees,
+        page: pageNumber,
+        pageSize: size,
+        total,
+        totalPages: Math.ceil(total / size)
     });
-
-    res.json(employees);
 };
-
 
 export const updateEmployee = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -113,7 +128,4 @@ export const deleteEmployee = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-
-
-
 

@@ -1,0 +1,477 @@
+{
+	"info": {
+		"_postman_id": "c0671a25-7d5f-46fe-91da-c7cb7cedeb58",
+		"name": "galih",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36985440"
+	},
+	"item": [
+		{
+			"name": "dexa",
+			"item": [
+				{
+					"name": "employee",
+					"item": [
+						{
+							"name": "verify me",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlbXBsb3llZUBjb21wYW55LmNvbSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc1MjM3MjUyNiwiZXhwIjoxNzUyNDU4OTI2fQ.c1SEYu60Jrk2yqdsQY1Y126Lu5pGmoIhaDTTzjFTnFk"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3002/user/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"user",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get attendance summry",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlbXBsb3llZUBjb21wYW55LmNvbSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc1MjM5MTE0NCwiZXhwIjoxNzUyNDc3NTQ0fQ.syQ4BuPCyWgV_9xNVNclB2XbQPSpZbAzB9Sd4zPbfLM"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3003/attendance/summary",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"attendance",
+										"summary"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "2025-07-01",
+											"disabled": true
+										},
+										{
+											"key": "end",
+											"value": "2025-07-02",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\":\"employee@company.com\", \"password\":\"password123\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/user/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "attendance",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlbXBsb3llZUBjb21wYW55LmNvbSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc1MjE1ODk2NywiZXhwIjoxNzUyMjQ1MzY3fQ.LjAIauMcH4ADLCLbD7vqFbbs-LK2l4x6aF92_KOgjPY"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"type\":\"masuk\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3003/attendance/absen",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"attendance",
+										"absen"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update my profile",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJlbXBsb3llZUBjb21wYW55LmNvbSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc1MjA3NzM4MywiZXhwIjoxNzUyMTYzNzgzfQ.eAWt1ZAsu33nWlsZRAK3nCzBv_KWs8ltQAxw8LZWHuw"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phoneNumber\": \"14045\",\r\n    \"photoUrl\": \"https://i.pravatar.cc/200\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3002/user/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"user",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "upload foto",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlbXBsb3llZUBjb21wYW55LmNvbSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc1MjM5MTE0NCwiZXhwIjoxNzUyNDc3NTQ0fQ.syQ4BuPCyWgV_9xNVNclB2XbQPSpZbAzB9Sd4zPbfLM"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/full/path/to/your/image.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3002/user/photo-upload",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"user",
+										"photo-upload"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "get update profile logs",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjM3NDE0NywiZXhwIjoxNzUyNDYwNTQ3fQ._mVmUgzgbXSuhehFl78EdVAKCBlN712f0Ru1ykv1EYg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3005/logs",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3005",
+									"path": [
+										"logs"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2025-07-10",
+											"disabled": true
+										},
+										{
+											"key": "endDate",
+											"value": "2025-07-11",
+											"disabled": true
+										},
+										{
+											"key": "employeeId",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "dexa",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all employee",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjM5MTAxMiwiZXhwIjoxNzUyNDc3NDEyfQ.9orlmyH6yliF9InYfD_b87mEnWvL61DFj8O-gabCfKc"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3004/admin/employees?includeInactive=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3004",
+									"path": [
+										"admin",
+										"employees"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "staff2@company.com",
+											"disabled": true
+										},
+										{
+											"key": "includeInactive",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "generate employee",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjIwNDY0NCwiZXhwIjoxNzUyMjkxMDQ0fQ.h9Sfe6Xgt2TvGrUVpHY3q2RueVdkZIfoOg3I7Syogds"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"staff2@company.com\",\n    \"name\": \"Karyawan 2\",\n    \"position\": \"Backend Developer\",\n    \"phoneNumber\": \"081234567891\",\n    \"password\": \"karyawan123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3004/admin/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3004",
+									"path": [
+										"admin",
+										"employees"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "admin login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\": \"admin@company.com\", \"password\": \"admin123\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/user/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update employee data",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjIwNDY0NCwiZXhwIjoxNzUyMjkxMDQ0fQ.h9Sfe6Xgt2TvGrUVpHY3q2RueVdkZIfoOg3I7Syogds"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Karyawan 1 Updated\",\n    \"position\": \"QA Engineer\",\n    \"phoneNumber\": \"0819999999\",\n    \"password\": \"newpass123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3004/admin/employees/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3004",
+									"path": [
+										"admin",
+										"employees",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete employe",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjIwNDY0NCwiZXhwIjoxNzUyMjkxMDQ0fQ.h9Sfe6Xgt2TvGrUVpHY3q2RueVdkZIfoOg3I7Syogds"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3004/admin/employees/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3004",
+									"path": [
+										"admin",
+										"employees",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all attendace",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjM5MTAxMiwiZXhwIjoxNzUyNDc3NDEyfQ.9orlmyH6yliF9InYfD_b87mEnWvL61DFj8O-gabCfKc"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3003/attendance/attendances",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"attendance",
+										"attendances"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

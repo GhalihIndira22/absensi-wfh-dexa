@@ -8,6 +8,20 @@ type ProfileUpdateInput = {
     password?: string;
 };
 
+export const findUserById = async (id: number) => {
+    return prisma.user.findUnique({
+        where: { id },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            position: true,
+            photoUrl: true,
+            phoneNumber: true,
+        },
+    });
+};
+
 export const updateProfile = async (id: number, input: ProfileUpdateInput) => {
     const updates: any = {};
     const changes: any[] = [];
