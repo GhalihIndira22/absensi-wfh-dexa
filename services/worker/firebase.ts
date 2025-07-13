@@ -2,7 +2,7 @@
 import admin from 'firebase-admin';
 import path from 'path';
 
-const serviceAccount = require(path.join(__dirname, '../../firebase-service-account.json'));
+const serviceAccount = require(path.join(__dirname, '../../notif.json'));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
