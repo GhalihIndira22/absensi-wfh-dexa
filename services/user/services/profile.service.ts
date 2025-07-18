@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { UpdateProfileDto } from '../dto/update-profile.dto';
 
 const prisma = new PrismaClient();
 
@@ -22,20 +23,26 @@ export const findUserById = async (id: number) => {
     });
 };
 
-export const updateProfile = async (id: number, input: ProfileUpdateInput) => {
-    const updates: any = {};
+export const updateProfile = async (id: number, input: UpdateProfileDto) => {
+    const updates: Partial<UpdateProfileDto & { passwordHash?: string }> = {};
     const changes: any[] = [];
 
+    if (input.name) {
+        updates.name = input.name;
+        changes.push({ type: 'name', newValue: input.name });
+    }
+    if (input.position) {
+        updates.position = input.position;
+        changes.push({ type: 'position', newValue: input.position });
+    }
     if (input.photoUrl) {
         updates.photoUrl = input.photoUrl;
         changes.push({ type: 'photo', newValue: input.photoUrl });
     }
-
     if (input.phoneNumber) {
         updates.phoneNumber = input.phoneNumber;
         changes.push({ type: 'phone_number', newValue: input.phoneNumber });
     }
-
     if (input.password) {
         const bcrypt = await import('bcrypt');
         updates.passwordHash = await bcrypt.hash(input.password, 10);

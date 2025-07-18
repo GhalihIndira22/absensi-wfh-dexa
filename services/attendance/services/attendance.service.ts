@@ -1,9 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import {startOfDay, endOfDay, parseISO, endOfToday, startOfMonth} from 'date-fns';
+import { AttendanceType } from '../dto/attendance-type.enum';
 
 const prisma = new PrismaClient();
 
-export const createAttendance = async (userId: number, type: string) => {
+export const createAttendance = async (userId: number, type: AttendanceType) => {
+    console.log('[createAttendance] Input:', { userId, type });
     const todayStart = startOfDay(new Date());
     const todayEnd = endOfDay(new Date());
 
@@ -17,31 +19,37 @@ export const createAttendance = async (userId: number, type: string) => {
         }
     });
 
-    const hasMasuk = todaysAttendances.some((a) => a.type === 'masuk');
-    const hasPulang = todaysAttendances.some((a) => a.type === 'pulang');
+    const hasCheckIn = todaysAttendances.some((a) => a.type === AttendanceType.CHECKIN);
+    const hasCheckOut = todaysAttendances.some((a) => a.type === AttendanceType.CHECKOUT);
 
-    if (type === 'masuk' && hasMasuk) {
+    if (type === AttendanceType.CHECKIN && hasCheckIn) {
+        console.error('[createAttendance] Error: Sudah absen masuk hari ini', { userId });
         throw new Error('Anda sudah absen masuk hari ini');
     }
 
-    if (type === 'pulang') {
-        if (!hasMasuk) {
+    if (type === AttendanceType.CHECKOUT) {
+        if (!hasCheckIn) {
+            console.error('[createAttendance] Error: Belum absen masuk hari ini', { userId });
             throw new Error('Anda belum absen masuk hari ini');
         }
-        if (hasPulang) {
+        if (hasCheckOut) {
+            console.error('[createAttendance] Error: Sudah absen pulang hari ini', { userId });
             throw new Error('Anda sudah absen pulang hari ini');
         }
     }
 
-    return prisma.attendance.create({
+    const attendance = await prisma.attendance.create({
         data: {
             userId,
             type
         }
     });
+    console.log('[createAttendance] Success:', attendance);
+    return attendance;
 };
 
 export const getAttendanceSummary = async (userId: number, start?: string, end?: string, page: number = 1, pageSize: number = 20) => {
+    console.log('[getAttendanceSummary] Input:', { userId, start, end, page, pageSize });
     const startDate = start ? parseISO(start) : startOfMonth(new Date());
     const endDate = end ? parseISO(end) : endOfToday();
     const skip = (page - 1) * pageSize;
@@ -64,7 +72,7 @@ export const getAttendanceSummary = async (userId: number, start?: string, end?:
         prisma.attendance.count({ where })
     ]);
 
-    return {
+    const result = {
         data,
         meta: {
             total,
@@ -73,6 +81,8 @@ export const getAttendanceSummary = async (userId: number, start?: string, end?:
             totalPages: Math.ceil(total / pageSize)
         }
     };
+    console.log('[getAttendanceSummary] Result:', result);
+    return result;
 };
 
 export const getAttendanceRecords = async (query: {
@@ -83,6 +93,7 @@ export const getAttendanceRecords = async (query: {
     page?: string;
     limit?: string;
 }) => {
+    console.log('[getAttendanceRecords] Query:', query);
     const { startDate, endDate, employeeId, email, page = '1', limit = '20' } = query;
 
     const pageNum = parseInt(page);
@@ -128,7 +139,7 @@ export const getAttendanceRecords = async (query: {
         prisma.attendance.count({ where })
     ]);
 
-    return {
+    const result = {
         data,
         meta: {
             total,
@@ -137,5 +148,7 @@ export const getAttendanceRecords = async (query: {
             totalPages: Math.ceil(total / limitNum)
         }
     };
+    console.log('[getAttendanceRecords] Result:', result);
+    return result;
 };
 

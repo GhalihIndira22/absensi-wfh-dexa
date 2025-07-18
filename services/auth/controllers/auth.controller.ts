@@ -1,26 +1,16 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { findUserByEmail } from '../services/auth.service';
+import { LoginDto } from '../dto/login.dto';
+import { loginService } from '../services/auth.service';
 
 export const login = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
-
-    const user = await findUserByEmail(email);
-    if (!user) {
-        return res.status(401).json({ message: 'User not found' });
+    console.log('[login] Request:', req.body);
+    const loginDto: LoginDto = req.body;
+    try {
+        const token = await loginService(loginDto);
+        console.log('[login] Success:', { email: loginDto.email });
+        res.json({ token });
+    } catch (error: any) {
+        console.error('[login] Error:', error.message);
+        res.status(error.status || 401).json({ message: error.message });
     }
-
-    const isValid = await bcrypt.compare(password, user.passwordHash);
-    if (!isValid) {
-        return res.status(401).json({ message: 'Invalid password' });
-    }
-
-    const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.role },
-        process.env.JWT_SECRET!,
-        { expiresIn: '1d' }
-    );
-
-    res.json({ token });
 };

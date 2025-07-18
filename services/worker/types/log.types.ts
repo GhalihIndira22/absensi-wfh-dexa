@@ -1,10 +1,11 @@
 // services/worker/types/log.types.ts
 
 export interface LogPayload {
-    employeeId: number;
+    employee_id: number;
     email: string;
     field: string;
     oldValue: string;
     newValue: string;
     timestamp: string;
+    change_type: string;
 }

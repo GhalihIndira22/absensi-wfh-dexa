@@ -5,7 +5,7 @@ export const sendAdminNotification = async (log: LogPayload) => {
     const message = {
         notification: {
             title: 'Perubahan Profil Karyawan',
-            body: `${log.email} mengubah ${log.field}`,
+            body: `Karyawan dengan id ${log.employee_id} mengubah ${log.change_type}`,
         },
         topic: 'admin-notif',
     };

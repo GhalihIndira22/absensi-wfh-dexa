@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import {findUserById, updateProfile} from '../services/profile.service';
 import {publishProfileUpdate} from "../kafka/producer";
+import { UpdateProfileDto } from '../dto/update-profile.dto';
 
 export const getProfile = async (req: Request, res: Response) => {
     const user = req.user;
@@ -19,7 +20,7 @@ export const getProfile = async (req: Request, res: Response) => {
 
 export const updateMyProfile = async (req: Request, res: Response) => {
     const userId = req.user!.id;
-    const input = req.body;
+    const input: UpdateProfileDto = req.body;
 
     const { userBefore, changes } = await updateProfile(userId, input);
 
